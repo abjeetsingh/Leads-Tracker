@@ -4,35 +4,35 @@ const ulel  = document.getElementById("ul-el")
 const delbtn = document.getElementById("del-btn")
 const tabBtn = document.getElementById("tab-btn")
 
-let myLeads = []
+let mytopics = []
 
-const lfls = JSON.parse( localStorage.getItem("myleads") )  
+const lfls = JSON.parse( localStorage.getItem("mytopics") )  
 if(lfls)
   {
-    myLeads = lfls
-    renderLeads(myLeads)
+    mytopics = lfls
+    rendertopics(mytopics)
   }
 
 inputBtn.addEventListener("click", () => {
   console.log("button was clicked")
-  myLeads.push(inputele.value)
+  mytopics.push(inputele.value)
   inputele.value = ""
-  localStorage.setItem("myleads",JSON.stringify(myLeads));
-  renderLeads(myLeads)
+  localStorage.setItem("mytopics",JSON.stringify(mytopics));
+  rendertopics(mytopics)
   
 })
 
 
 
-function renderLeads(lead){
+function rendertopics(topic){
   var listItems = ""
-  for(let i=0; i<lead.length; ++i){
-    // listItems  += "<li><a target='_blank' href=' " +myLeads[i]+ "'>" +myLeads[i]+"</li>";
+  for(let i=0; i<topic.length; ++i){
+    // listItems  += "<li><a target='_blank' href=' " +mytopics[i]+ "'>" +mytopics[i]+"</li>";
     //Template Strings
     listItems  += `
       <li>
-        <a target='_blank' href='${lead[i]}'>
-          ${lead[i]}
+        <a target='_blank' href='${topic[i]}'>
+          ${topic[i]}
         </a>
       </li>`
   }
@@ -41,16 +41,16 @@ function renderLeads(lead){
 
 tabBtn.addEventListener("click", ()=> {
   chrome.tabs.query({active:true, currentWindow:true}, function(tabs){
-    myLeads.push(tabs[0].url);
-    localStorage.setItem("myleads",JSON.stringify(myLeads));
-    renderLeads(myLeads)
+    mytopics.push(tabs[0].url);
+    localStorage.setItem("mytopics",JSON.stringify(mytopics));
+    rendertopics(mytopics)
   })
 })
 
 
-delbtn.addEventListener("dblclick",function delLeads(){
+delbtn.addEventListener("dblclick",function deltopics(){
   localStorage.clear();
-  myLeads = []
+  mytopics = []
   ulel.innerHTML = ''
 })
 
